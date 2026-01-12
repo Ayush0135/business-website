@@ -408,14 +408,27 @@ h4 {
 }
 
 .success-message {
-  padding: 20px;
-  background: rgba(16, 185, 129, 0.2);
-  border: 1px solid var(--secondary);
-  border-radius: 12px;
-  color: var(--secondary);
+  padding: 40px 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid var(--secondary);
+  border-radius: 20px;
+  color: white;
   text-align: center;
-  font-weight: 600;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.success-message h3 {
+  color: var(--secondary);
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.success-message p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
 }
 
 .modal-overlay {
