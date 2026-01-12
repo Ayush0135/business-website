@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   Zap,
   Database,
@@ -22,12 +23,29 @@ import {
   HardDrive,
   Infinity
 } from 'lucide-react';
-// Removed framer-motion for maximum visibility reliability
-import { useForm, ValidationError } from '@formspree/react';
+
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [formState, handleFormSubmit] = useForm("23tec2cs758@vgu.ac.in");
+  const [formStatus, setFormStatus] = React.useState({ submitting: false, succeeded: false, error: null });
+  const formRef = useRef();
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    setFormStatus({ submitting: true, succeeded: false, error: null });
+
+    // NOTE: Replace these with your actual IDs from your EmailJS dashboard
+    const serviceID = 'YOUR_SERVICE_ID';
+    const templateID = 'YOUR_TEMPLATE_ID';
+    const publicKey = 'YOUR_PUBLIC_KEY';
+
+    emailjs.sendForm(serviceID, templateID, formRef.current, publicKey)
+      .then((result) => {
+        setFormStatus({ submitting: false, succeeded: true, error: null });
+      }, (error) => {
+        setFormStatus({ submitting: false, succeeded: false, error: 'Failed to send. Please check your EmailJS keys.' });
+      });
+  };
   const models = [
     { name: 'GPT-4o', latency: 'High', cost: '₹425.00', reliability: 'Elite', type: 'Reasoning' },
     { name: 'Grok-1', latency: 'Med', cost: '₹380.00', reliability: 'High', type: 'Reasoning' },
@@ -405,33 +423,32 @@ const App = () => {
               Fill the form below to receive your custom ROI analysis.
             </p>
 
-            {formState.succeeded ? (
+            {formStatus.succeeded ? (
               <div className="success-message">
                 <CheckCircle2 size={48} style={{ marginBottom: '20px' }} />
                 <h3>Request Received!</h3>
                 <p>We'll reach out to your work email shortly to schedule your custom ROI analysis.</p>
-                <button onClick={() => window.location.reload()} className="btn-primary" style={{ background: 'white', color: 'var(--primary)', marginTop: '20px' }}>
+                <button onClick={() => setFormStatus({ ...formStatus, succeeded: false })} className="btn-primary" style={{ background: 'white', color: 'var(--primary)', marginTop: '20px' }}>
                   Send Another Request
                 </button>
               </div>
             ) : (
               <form
-                onSubmit={handleFormSubmit}
+                ref={formRef}
+                onSubmit={handleEmailSubmit}
                 className="form-container"
               >
                 <div className="form-group">
                   <label>Work Email</label>
-                  <input name="email" type="email" required className="form-input" placeholder="you@company.com" />
-                  <ValidationError prefix="Email" field="email" errors={formState.errors} />
+                  <input name="user_email" type="email" required className="form-input" placeholder="you@company.com" />
                 </div>
                 <div className="form-group">
                   <label>Company Name</label>
-                  <input name="company" type="text" required className="form-input" placeholder="TechCorp Inc." />
-                  <ValidationError prefix="Company" field="company" errors={formState.errors} />
+                  <input name="company_name" type="text" required className="form-input" placeholder="TechCorp Inc." />
                 </div>
                 <div className="form-group">
                   <label>Query Volume (Monthly)</label>
-                  <select name="volume" className="form-input">
+                  <select name="query_volume" className="form-input">
                     <option>10k - 100k</option>
                     <option>100k - 1M</option>
                     <option>1M+</option>
@@ -439,15 +456,15 @@ const App = () => {
                 </div>
                 <button
                   type="submit"
-                  disabled={formState.submitting}
+                  disabled={formStatus.submitting}
                   className="btn-primary"
                   style={{ background: 'white', color: 'var(--primary)', boxShadow: 'none', marginTop: '10px' }}
                 >
-                  {formState.submitting ? 'Sending...' : 'Schedule Demo'} <ArrowRight size={18} />
+                  {formStatus.submitting ? 'Sending...' : 'Schedule Demo'} <ArrowRight size={18} />
                 </button>
-                {formState.errors && (
+                {formStatus.error && (
                   <p style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '10px' }}>
-                    There was an error sending your request. Please try again.
+                    {formStatus.error}
                   </p>
                 )}
               </form>
