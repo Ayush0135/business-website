@@ -12,9 +12,17 @@ import {
   ArrowRight,
   FileText,
   Terminal,
-  X
+  X,
+  History,
+  Brain,
+  Activity,
+  Search,
+  Globe,
+  ShieldAlert,
+  HardDrive,
+  Infinity
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+// Removed framer-motion for maximum visibility reliability
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -42,6 +50,7 @@ const App = () => {
           <a href="#workflow">Workflow</a>
           <a href="#scope">Scope</a>
           <a href="#pricing">Cost Savings</a>
+          <a href="#packages">Plans</a>
           <a href="#benefits">Professional Edge</a>
         </div>
         <button className="btn-primary">Get Access</button>
@@ -49,31 +58,15 @@ const App = () => {
 
       <header className="hero">
         <div className="hero-glow"></div>
-        <motion.h1
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          transition={{ duration: 0.6 }}
-        >
+        <h1>
           SmartRoute: The Hybrid <br />
           <span style={{ color: 'var(--secondary)' }}>GraphRAG</span> Engine
-        </motion.h1>
-        <motion.p
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        </h1>
+        <p>
           Enterprise-grade GraphRAG middleware that slashes API costs by 90%
           while eliminating hallucinations through relationship-aware context.
-        </motion.p>
-        <motion.div
-          className="hero-btns"
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        </p>
+        <div className="hero-btns">
           <button
             className="btn-primary"
             onClick={() => document.getElementById('benefits').scrollIntoView({ behavior: 'smooth' })}
@@ -88,114 +81,74 @@ const App = () => {
             <FileText size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
             Read Whitepaper
           </button>
-        </motion.div>
+        </div>
       </header>
 
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsModalOpen(false)}
-          >
-            <motion.div
-              className="modal-content"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className="close-btn" onClick={() => setIsModalOpen(false)}><X /></button>
-              <h2>Technical Summary: SmartRoute v1.0</h2>
-              <div className="modal-body">
-                <div className="abstract-box">
-                  <p><strong>Abstract:</strong> This architectural framework addresses the dual challenges of high operational costs and "hallucinations" in enterprise LLM applications. By integrating a <strong>Knowledge Graph layer</strong> with a <strong>dynamic router</strong>, we achieve relationship-aware context and cost-optimized model selection.</p>
-                </div>
-
-                <h3>Architecture Overview</h3>
-                <div className="code-block">
-                  <Terminal size={14} style={{ marginBottom: '10px' }} />
-                  <code>
-                    query -&gt; GraphRAG(Neo4j + ChromaDB) -&gt; ContextRefined() <br />
-                    ContextRefined -&gt; SmartRoute(QueryComplexity) -&gt; ModelTarget <br />
-                    ModelTarget(Simple) -&gt; Llama-3-8b <br />
-                    ModelTarget(Complex) -&gt; GPT-4o
-                  </code>
-                </div>
-
-                <h3>Key Methodology</h3>
-                <ul>
-                  <li><strong>Hybrid Retrieval:</strong> Combines vector similarity with structural relationships.</li>
-                  <li><strong>Token Optimization:</strong> Minimized token counts via precise context indexing.</li>
-                  <li><strong>Sustainable AI:</strong> Production-ready framework for financial sustainability.</li>
-                </ul>
-
-                <button className="btn-primary" style={{ width: '100%', marginTop: '20px' }} onClick={() => setIsModalOpen(false)}>
-                  Download Full PDF (Coming Soon)
-                </button>
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setIsModalOpen(false)}><X /></button>
+            <h2>Technical Summary: SmartRoute v1.0</h2>
+            <div className="modal-body">
+              <div className="abstract-box">
+                <p><strong>Abstract:</strong> This architectural framework addresses the dual challenges of high operational costs and "hallucinations" in enterprise LLM applications. By integrating a <strong>Knowledge Graph layer</strong> with a <strong>dynamic router</strong>, we achieve relationship-aware context and cost-optimized model selection.</p>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+              <h3>Architecture Overview</h3>
+              <div className="code-block">
+                <Terminal size={14} style={{ marginBottom: '10px' }} />
+                <code>
+                  query -&gt; GraphRAG(Neo4j + ChromaDB) -&gt; ContextRefined() <br />
+                  ContextRefined -&gt; SmartRoute(QueryComplexity) -&gt; ModelTarget <br />
+                  ModelTarget(Simple) -&gt; Llama-3-8b <br />
+                  ModelTarget(Complex) -&gt; GPT-4o
+                </code>
+              </div>
+
+              <h3>Key Methodology</h3>
+              <ul>
+                <li><strong>Hybrid Retrieval:</strong> Combines vector similarity with structural relationships.</li>
+                <li><strong>Token Optimization:</strong> Minimized token counts via precise context indexing.</li>
+                <li><strong>Sustainable AI:</strong> Production-ready framework for financial sustainability.</li>
+              </ul>
+
+              <button className="btn-primary" style={{ width: '100%', marginTop: '20px' }} onClick={() => setIsModalOpen(false)}>
+                Download Full PDF (Coming Soon)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section id="workflow" className="section">
         <h2 className="section-title">The Smart Methodology</h2>
-        <div className="methodology-container">
-          <motion.div
-            className="methodology-step"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="step-icon-large"><Database size={32} /></div>
-            <div className="step-content">
-              <span className="step-tag">Phase 01</span>
-              <h3>Knowledge Extraction</h3>
-              <p>
-                We ingest your unstructured enterprise data into a <strong>dynamic Knowledge Graph</strong>.
-                Using Neo4j, we map complex entity relationships that standard vector databases miss.
-              </p>
-            </div>
-          </motion.div>
+        <div className="grid">
+          <div className="card">
+            <div className="step-icon-large" style={{ marginBottom: '20px' }}><Database size={32} /></div>
+            <span className="step-tag">Phase 01</span>
+            <h3>Knowledge Extraction</h3>
+            <p>
+              We ingest your unstructured enterprise data into a <strong>dynamic Knowledge Graph</strong> using Neo4j.
+            </p>
+          </div>
 
-          <motion.div
-            className="methodology-step"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="step-icon-large" style={{ background: 'var(--gradient-2)' }}><Layers size={32} /></div>
-            <div className="step-content">
-              <span className="step-tag">Phase 02</span>
-              <h3>Hybrid GraphRAG Refinement</h3>
-              <p>
-                Our retrieval engine combines <strong>Vector Similarity</strong> with <strong>Graph Traversal</strong>.
-                This results in relationship-aware context that eliminates hallucinations and reduces token noise.
-              </p>
-            </div>
-          </motion.div>
+          <div className="card">
+            <div className="step-icon-large" style={{ background: 'var(--gradient-2)', marginBottom: '20px' }}><Layers size={32} /></div>
+            <span className="step-tag">Phase 02</span>
+            <h3>Hybrid GraphRAG</h3>
+            <p>
+              Combining <strong>Vector Similarity</strong> with <strong>Graph Traversal</strong> to eliminate hallucinations.
+            </p>
+          </div>
 
-          <motion.div
-            className="methodology-step"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            <div className="step-icon-large" style={{ background: 'var(--accent)' }}><Share2 size={32} /></div>
-            <div className="step-content">
-              <span className="step-tag">Phase 03</span>
-              <h3>Intelligent SmartRoute</h3>
-              <p>
-                A decision-gate middleware analyzes query intent. <strong>Simple tasks</strong> are routed to low-cost models (Llama-3),
-                while <strong>complex reasoning</strong> triggers high-tier models (GPT-4o), ensuring maximum cost-efficiency.
-              </p>
-            </div>
-          </motion.div>
+          <div className="card">
+            <div className="step-icon-large" style={{ background: 'var(--accent)', marginBottom: '20px' }}><Share2 size={32} /></div>
+            <span className="step-tag">Phase 03</span>
+            <h3>Intelligent Routing</h3>
+            <p>
+              Query intent analysis routes tasks to the most cost-effective model (Llama-3 vs GPT-4o).
+            </p>
+          </div>
         </div>
       </section>
 
@@ -287,46 +240,31 @@ const App = () => {
         <h2 className="section-title">How Routing Works</h2>
         <div className="routing-diagram-container">
           <div className="diagram-flow">
-            <motion.div
-              className="diagram-node"
-              whileHover={{ scale: 1.05 }}
-            >
+            <div className="diagram-node">
               <h5>User Query</h5>
               <p>Natural mapping of intent...</p>
-            </motion.div>
+            </div>
 
             <div className="diagram-arrow"></div>
 
-            <motion.div
-              className="decision-gate"
-              animate={{ boxSizing: ['border-box', 'content-box'], opacity: [0.8, 1, 0.8] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
+            <div className="decision-gate">
               <div className="decision-content">SmartRoute<br />Gateway</div>
-            </motion.div>
+            </div>
 
             <div className="diagram-arrow"></div>
 
             <div className="path-split">
-              <motion.div
-                className="diagram-node"
-                style={{ borderColor: 'var(--secondary)' }}
-                whileHover={{ scale: 1.05 }}
-              >
+              <div className="diagram-node" style={{ borderColor: 'var(--secondary)' }}>
                 <h5>Efficiency Path</h5>
                 <p>Llama-3-8b / DeepSeek-V3</p>
                 <div style={{ color: 'var(--secondary)', fontSize: '0.7rem' }}>Complexity Score &lt; 0.4</div>
-              </motion.div>
+              </div>
 
-              <motion.div
-                className="diagram-node"
-                style={{ borderColor: 'var(--accent)' }}
-                whileHover={{ scale: 1.05 }}
-              >
+              <div className="diagram-node" style={{ borderColor: 'var(--accent)' }}>
                 <h5>Performance Path</h5>
                 <p>GPT-4o / Claude 3.5</p>
                 <div style={{ color: 'var(--accent)', fontSize: '0.7rem' }}>Complexity Score &gt; 0.4</div>
-              </motion.div>
+              </div>
             </div>
           </div>
           <p style={{ textAlign: 'center', marginTop: '40px', color: 'var(--text-muted)' }}>
@@ -350,6 +288,77 @@ const App = () => {
           <div className="vendor-card">
             <h4>Hybrid Integration</h4>
             <p>Easily plug your specialized models into our routing mesh. We highlight your model's strengths to the right enterprise users.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="packages" className="section" style={{ background: 'rgba(59, 130, 246, 0.02)' }}>
+        <h2 className="section-title">Execution Packages</h2>
+        <div className="pricing-grid">
+          <div className="pricing-card">
+            <div className="pricing-header">
+              <span className="tier-name">Free Tier</span>
+              <div className="price">₹0<span>/mo</span></div>
+              <p className="tier-desc">Ideal for Students, Hackathons, and local testing.</p>
+            </div>
+            <ul className="feature-list">
+              <li><Zap size={16} /> <strong>Rules:</strong> Basic Keyword Routing</li>
+              <li><Activity size={16} /> <strong>Limit:</strong> 30 requests / day</li>
+              <li><Cpu size={16} /> <strong>Models:</strong> 2 User-provided models</li>
+              <li><Globe size={16} /> <strong>Hosting:</strong> Company's server</li>
+              <li><Zap size={16} /> <strong>Latency:</strong> Standard</li>
+            </ul>
+            <button className="btn-secondary">Start Testing</button>
+          </div>
+
+          <div className="pricing-card featured">
+            <div className="featured-badge">Enterprise</div>
+            <div className="pricing-header">
+              <span className="tier-name">Paid Tier</span>
+              <div className="price">₹999<span>/mo</span></div>
+              <p className="tier-desc">₹5,999+ / Year (License Available)</p>
+            </div>
+            <ul className="feature-list">
+              <li><ShieldAlert size={16} /> <strong>PII Redaction:</strong> Auto-detect & Mask</li>
+              <li><HardDrive size={16} /> <strong>Self-Hosted:</strong> Deploy on your system</li>
+              <li><Infinity size={16} /> <strong>Limit:</strong> 5,000 requests / month</li>
+              <li><Zap size={16} /> <strong>Latency:</strong> Premium / Instant</li>
+              <li><Layers size={16} /> <strong>Custom Models:</strong> Up to 10 (Cloud + Local)</li>
+            </ul>
+            <button className="btn-primary">Get License</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="future-roadmap" className="section" style={{ background: 'rgba(139, 92, 246, 0.03)' }}>
+        <h2 className="section-title">Future Roadmap</h2>
+        <div className="roadmap-grid">
+          <div className="roadmap-card">
+            <div className="roadmap-badge">Coming Soon</div>
+            <History className="roadmap-icon" size={24} />
+            <h3>Compliance Audit Logs</h3>
+            <p>Full traceability for every routing decision, ensuring enterprise-grade compliance and security audits.</p>
+          </div>
+
+          <div className="roadmap-card">
+            <div className="roadmap-badge">Coming Soon</div>
+            <Brain className="roadmap-icon" size={24} />
+            <h3>Self-Learning Engine</h3>
+            <p>Historical performance data automatically tunes routing logic to maximize accuracy and minimize latency.</p>
+          </div>
+
+          <div className="roadmap-card">
+            <div className="roadmap-badge">In Development</div>
+            <Activity className="roadmap-icon" size={24} />
+            <h3>Real-time Cost Tracking</h3>
+            <p>Live dashboard for monitoring model costs, latency spikes, and routing efficiency in real-time.</p>
+          </div>
+
+          <div className="roadmap-card">
+            <div className="roadmap-badge">Researching</div>
+            <Search className="roadmap-icon" size={24} />
+            <h3>Decision Transparency</h3>
+            <p>Explainable AI for routing: understand exactly why a specific model was chosen for any given query.</p>
           </div>
         </div>
       </section>
@@ -417,7 +426,7 @@ const App = () => {
                 </select>
               </div>
               <button type="submit" className="btn-primary" style={{ background: 'white', color: 'var(--primary)', boxShadow: 'none', marginTop: '10px' }}>
-                Schedule Demo <ArrowRight size={18} inline />
+                Schedule Demo <ArrowRight size={18} />
               </button>
             </form>
           </div>

@@ -351,6 +351,7 @@ h4 {
     display: none;
   }
 }
+
 .workflow-step {
   display: flex;
   align-items: flex-start;
@@ -620,15 +621,179 @@ h4 {
     flex-direction: column;
     gap: 30px;
   }
+
   .diagram-arrow {
     width: 2px;
     height: 40px;
     margin: 10px 0;
   }
+
   .diagram-arrow::after {
     transform: rotate(90deg);
     right: -3px;
     top: auto;
     bottom: -5px;
   }
+}
+
+/* Roadmap Styles */
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.roadmap-card {
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px dashed var(--card-border);
+  border-radius: 20px;
+  padding: 40px 30px;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.roadmap-card:hover {
+  border-color: var(--accent);
+  background: rgba(139, 92, 246, 0.05);
+  transform: translateY(-5px);
+}
+
+.roadmap-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.roadmap-icon {
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.roadmap-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.roadmap-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Pricing Styles */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 50px auto 0;
+}
+
+.pricing-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.pricing-card.featured {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0.5) 100%);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pricing-header {
+  margin-bottom: 30px;
+}
+
+.tier-name {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.price {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 10px 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.price span {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.tier-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px;
+  flex-grow: 1;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.feature-list li svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.btn-secondary {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--text-muted);
 }
